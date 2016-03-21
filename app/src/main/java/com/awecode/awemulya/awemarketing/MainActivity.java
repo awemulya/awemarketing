@@ -1,31 +1,34 @@
 package com.awecode.awemulya.awemarketing;
 
+import android.app.ListActivity;
+import android.app.LoaderManager;
+import android.content.Loader;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.SimpleCursorAdapter;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends ListActivity implements
+        LoaderManager.LoaderCallbacks<Cursor> {
+    private static final int ACTIVITY_CREATE = 0;
+    private static final int ACTIVITY_EDIT = 1;
+    private static final int DELETE_ID = Menu.FIRST + 1;
+    // private Cursor cursor;
+    private SimpleCursorAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+        this.getListView().setDividerHeight(2);
+        fillData();
+        registerForContextMenu(getListView());
     }
 
     @Override
@@ -48,5 +51,34 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+    private void fillData() {
+
+        // Fields from the database (projection)
+        // Must include the _id column for the adapter to work
+//        String[] from = new String[] { TodoTable.COLUMN_SUMMARY };
+        // Fields on the UI to which we map
+//        int[] to = new int[] { R.id.label };
+
+//        getLoaderManager().initLoader(0, null, this);
+//        adapter = new SimpleCursorAdapter(this, R.layout.todo_row, null, from,
+//                to, 0);
+
+//        setListAdapter(adapter);
+    }
+
+    @Override
+    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+        return null;
+    }
+
+    @Override
+    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+
+    }
+
+    @Override
+    public void onLoaderReset(Loader<Cursor> loader) {
+
     }
 }
