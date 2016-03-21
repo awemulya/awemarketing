@@ -5,13 +5,12 @@ import android.app.LoaderManager;
 import android.content.Loader;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.SimpleCursorAdapter;
+
+import com.awecode.awemulya.awemarketing.database.ClientsTable;
 
 public class MainActivity extends ListActivity implements
         LoaderManager.LoaderCallbacks<Cursor> {
@@ -24,7 +23,7 @@ public class MainActivity extends ListActivity implements
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.marketing_client_list);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         this.getListView().setDividerHeight(2);
         fillData();
@@ -56,15 +55,15 @@ public class MainActivity extends ListActivity implements
 
         // Fields from the database (projection)
         // Must include the _id column for the adapter to work
-//        String[] from = new String[] { TodoTable.COLUMN_SUMMARY };
+        String[] from = new String[] { ClientsTable.COLUMN_SUMMARY };
         // Fields on the UI to which we map
-//        int[] to = new int[] { R.id.label };
+        int[] to = new int[] { R.id.label };
 
-//        getLoaderManager().initLoader(0, null, this);
-//        adapter = new SimpleCursorAdapter(this, R.layout.todo_row, null, from,
-//                to, 0);
+        getLoaderManager().initLoader(0, null, this);
+        adapter = new SimpleCursorAdapter(this, R.layout.clients_row, null, from,
+                to, 0);
 
-//        setListAdapter(adapter);
+        setListAdapter(adapter);
     }
 
     @Override
