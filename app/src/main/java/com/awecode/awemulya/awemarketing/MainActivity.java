@@ -5,9 +5,12 @@ import android.app.LoaderManager;
 import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 
 import com.awecode.awemulya.awemarketing.database.ClientsTable;
@@ -71,6 +74,16 @@ public class MainActivity extends ListActivity implements
         setListAdapter(adapter);
     }
 
+    // Opens the second activity if an entry is clicked
+    @Override
+    protected void onListItemClick(ListView l, View v, int position, long id) {
+        super.onListItemClick(l, v, position, id);
+        Intent i = new Intent(this, ClientDetailActivity.class);
+        Uri todoUri = Uri.parse(MyTodoContentProvider.CONTENT_URI + "/" + id);
+        i.putExtra(MyTodoContentProvider.CONTENT_ITEM_TYPE, todoUri);
+
+        startActivity(i);
+    }
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         return null;
