@@ -5,7 +5,6 @@ import android.app.LoaderManager;
 import android.content.Loader;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.SimpleCursorAdapter;
@@ -24,7 +23,6 @@ public class MainActivity extends ListActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.marketing_client_list);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         this.getListView().setDividerHeight(2);
         fillData();
         registerForContextMenu(getListView());
