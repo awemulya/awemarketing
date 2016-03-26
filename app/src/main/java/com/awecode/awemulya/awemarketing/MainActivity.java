@@ -2,6 +2,7 @@ package com.awecode.awemulya.awemarketing;
 
 import android.app.ListActivity;
 import android.app.LoaderManager;
+import android.content.CursorLoader;
 import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
@@ -11,9 +12,11 @@ import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 
+import com.awecode.awemulya.awemarketing.contentprovider.ClientsContentProvider;
 import com.awecode.awemulya.awemarketing.database.ClientsTable;
 
 public class MainActivity extends ListActivity implements
@@ -27,7 +30,7 @@ public class MainActivity extends ListActivity implements
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.marketing_client_list);
+        setContentView(R.layout.client_list);
         this.getListView().setDividerHeight(2);
         fillData();
         registerForContextMenu(getListView());
@@ -80,8 +83,8 @@ public class MainActivity extends ListActivity implements
     protected void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
         Intent i = new Intent(this, ClientDetailActivity.class);
-        Uri todoUri = Uri.parse(MyTodoContentProvider.CONTENT_URI + "/" + id);
-        i.putExtra(MyTodoContentProvider.CONTENT_ITEM_TYPE, todoUri);
+        Uri todoUri = Uri.parse(ClientsContentProvider.CONTENT_URI + "/" + id);
+        i.putExtra(ClientsContentProvider.CONTENT_ITEM_TYPE, todoUri);
 
         startActivity(i);
     }
@@ -93,18 +96,39 @@ public class MainActivity extends ListActivity implements
         menu.add(0, DELETE_ID, 0, R.string.menu_delete);
     }
 
+
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        return null;
+        String[] projection = { ClientsTable.COLUMN_ID, ClientsTable.COLUMN_SUMMARY };
+        CursorLoader cursorLoader = new CursorLoader(this,
+                ClientsContentProvider.CONTENT_URI, projection, null, null, null);
+        return cursorLoader;
     }
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+        adapter.swapCursor(data);
 
     }
 
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
-
+        adapter.swapCursor(null);
     }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case DELETE_ID:
+                AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item
+                        .getMenuInfo();
+                Uri uri = Uri.parse(ClientsContentProvider.CONTENT_URI + "/"
+                        + info.id);
+                getContentResolver().delete(uri, null, null);
+                fillData();
+                return true;
+        }
+        return super.onContextItemSelected(item);
+    }
+
 }

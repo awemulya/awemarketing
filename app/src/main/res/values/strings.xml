@@ -1,6 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="hello">Hello World, Todo!</string>
     <string name="app_name">Awe Marketing</string>
-    <string name="action_settings">Settings</string>
-    <string name="no_clients">Currently there are no Clients visited</string>
+    <string name="no_clients">Currently there are no Clients Visited</string>
+    <string name="menu_insert">Add New Client</string>
     <string name="menu_delete">Delete Client</string>
-</resources>
+    <string name="client_summary">Summary</string>
+    <string name="client_description">Delete Client</string>
+    <string name="client_address">Address</string>
+    <string name="client_edit_summary">Summary</string>
+    <string name="client_edit_description">Description</string>
+    <string name="client_edit_address">Address</string>
+    <string name="client_edit_confirm">Confirm</string>
+</resources> 
